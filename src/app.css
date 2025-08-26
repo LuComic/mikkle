@@ -1,0 +1,39 @@
+@import 'tailwindcss';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/optional/presets';
+@import '@skeletonlabs/skeleton/themes/cerberus';
+
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+
+@font-face {
+	font-family: 'MikkelWind';
+	src: url('$lib/assets/fonts/MikkelWind.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'GothamHTF-Book';
+	src: url('$lib/assets/fonts/GothamHTF-Book.otf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+body,
+html {
+	background-color: #f6f2e8;
+	color: black;
+}
+
+h1,
+h2,
+h3,
+a {
+	font-family: 'MikkelWind', sans-serif;
+}
+
+p {
+	font-family: 'GothamHTF-Book', sans-serif;
+}
