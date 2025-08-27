@@ -1,6 +1,7 @@
 export interface worker {
 	name: string;
 	goto: 'burst' | 'yotl' | 'tokyo' | 'varia';
+	burger: 'Katsu Sando' | 'Cheeseburger';
 	hint: string;
 	period: 'new' | 'old';
 	image: string;
@@ -10,6 +11,7 @@ export const workers: worker[] = [
 	{
 		name: 'Jakob',
 		goto: 'burst',
+		burger: 'Katsu Sando',
 		hint: 'VIHKAB arbuusi',
 		period: 'old',
 		image: 'src/lib/pictures/jakob.png'
@@ -17,6 +19,7 @@ export const workers: worker[] = [
 	{
 		name: 'Emily',
 		goto: 'tokyo',
+		burger: 'Cheeseburger',
 		hint: 'tema sall leidis uue elutee',
 		period: 'new',
 		image: 'src/lib/pictures/emily.png'
@@ -24,6 +27,7 @@ export const workers: worker[] = [
 	{
 		name: 'Tom',
 		goto: 'burst',
+		burger: 'Cheeseburger',
 		hint: 'põhjala laager + badpenpal',
 		period: 'old',
 		image: 'src/lib/pictures/tom.png'
@@ -31,13 +35,15 @@ export const workers: worker[] = [
 	{
 		name: 'Liisa Lotta',
 		goto: 'tokyo',
+		burger: 'Cheeseburger',
 		hint: "'ma olen nii räpne' üks ohver",
-		period: 'new',
+		period: 'old',
 		image: 'src/lib/pictures/liisa.png'
 	},
 	{
 		name: 'Grethe',
 		goto: 'varia',
+		burger: 'Cheeseburger',
 		hint: 'Ringo Starr',
 		period: 'new',
 		image: 'src/lib/pictures/grethe.png'
@@ -45,6 +51,7 @@ export const workers: worker[] = [
 	{
 		name: 'Mona',
 		goto: 'varia',
+		burger: 'Katsu Sando',
 		hint: 'Kalamaja OG',
 		period: 'new',
 		image: 'src/lib/pictures/mona.png'
@@ -52,6 +59,7 @@ export const workers: worker[] = [
 	{
 		name: 'Iris',
 		goto: 'varia',
+		burger: 'Cheeseburger',
 		hint: 'Katjes Party Fred',
 		period: 'old',
 		image: 'src/lib/pictures/iris.png'

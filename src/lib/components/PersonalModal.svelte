@@ -26,7 +26,7 @@
 	tabindex="0"
 >
 	<div
-		class="flex h-auto w-full flex-col items-start justify-start overflow-scroll border border-r-4 border-b-4 bg-[#F6F2E8] px-4 py-2 md:w-[40vw]"
+		class="flex h-auto w-full flex-col items-start justify-start overflow-scroll border border-r-4 border-b-4 bg-[#F6F2E8] p-4 md:w-[40vw]"
 	>
 		<div class="mb-2 flex w-full items-center justify-start gap-2">
 			<img
@@ -49,6 +49,10 @@
 		<div class="flex items-center justify-start gap-1">
 			<h3 class="text-2xl">Period:</h3>
 			<p>{chosenWorker.period}</p>
+		</div>
+		<div class="flex items-center justify-start gap-1">
+			<h3 class="text-2xl">Fav burger:</h3>
+			<p>{chosenWorker.burger}</p>
 		</div>
 		<div class="flex items-center justify-start gap-1">
 			<h3 class="text-2xl">Hint:</h3>

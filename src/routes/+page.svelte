@@ -1,6 +1,50 @@
 <script lang="ts">
 	import TheRules from '$lib/components/TheRules.svelte';
 	import Stats from '$lib/components/Stats.svelte';
+	import { HeartCrack, Hourglass, PartyPopper } from '@lucide/svelte';
+	import { getTodayStatus, clearTodayIfExpired, formatMs } from '$lib/storage';
+
+	let playedToday = $state(false);
+	let result: 'win' | 'loss' | undefined = $state(undefined);
+	let guessedName: string | undefined = $state(undefined);
+	let resetAt = $state<number | undefined>(undefined);
+	let countdown = $state('');
+
+	function refreshStatus() {
+		const status = getTodayStatus();
+		playedToday = status.playedToday;
+		result = status.result;
+		guessedName = status.guessedName;
+		resetAt = status.resetAt;
+		if (resetAt) {
+			countdown = formatMs(resetAt - Date.now());
+		} else {
+			countdown = '';
+		}
+	}
+
+	let intervalId: number | undefined = undefined;
+
+	$effect(() => {
+		refreshStatus();
+		if (intervalId) {
+			clearInterval(intervalId);
+		}
+		intervalId = setInterval(() => {
+			const expired = clearTodayIfExpired();
+			if (expired) {
+				refreshStatus();
+				return;
+			}
+			if (resetAt) {
+				const ms = resetAt - Date.now();
+				countdown = formatMs(ms);
+			}
+		}, 1000) as unknown as number;
+		return () => {
+			if (intervalId) clearInterval(intervalId);
+		};
+	});
 </script>
 
 <div
@@ -12,7 +56,27 @@
 		<TheRules />
 		<Stats />
 	</div>
-	<button class="mt-0.5 border px-2 py-1 duration-100 hover:mt-0 hover:border-r-3 hover:border-b-3">
-		<a class="text-4xl visited:text-black" href="/game">Play</a>
-	</button>
+	{#if !playedToday}
+		<button
+			class="mt-0.5 border px-2 py-1 duration-100 hover:mt-0 hover:border-r-3 hover:border-b-3"
+		>
+			<a class="text-4xl visited:text-black" href="/play">Play</a>
+		</button>
+	{:else}
+		<div class="flex flex-col gap-2 md:flex-row md:gap-4">
+			<h3 class="flex items-center justify-start gap-2 text-2xl">
+				{#if result === 'win'}
+					<PartyPopper size={20} />
+					Today's worker was {guessedName}
+				{:else}
+					<HeartCrack size={20} />
+					You didn't guess the worker today
+				{/if}
+			</h3>
+			<h3 class="flex items-center justify-start gap-2 text-2xl">
+				<Hourglass size={20} />
+				Guess again in: {countdown}
+			</h3>
+		</div>
+	{/if}
 </div>

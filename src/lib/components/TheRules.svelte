@@ -21,5 +21,9 @@
 			<Beer />
 			Just right (green) or wrong (gray), no 'close'
 		</li>
+		<li class="flex items-center justify-start gap-2">
+			<Beer />
+			Other - not Burst or Tokyo
+		</li>
 	</ul>
 </div>

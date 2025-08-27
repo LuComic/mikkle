@@ -2,6 +2,9 @@
 	import { CornerDownRight } from '@lucide/svelte';
 	import { workers } from '$lib/data';
 	import type { worker } from '$lib/data';
+	import PlayModal from '$lib/components/PlayModal.svelte';
+	import { goto } from '$app/navigation';
+	import { getTodayStatus, markLoss, markWin } from '$lib/storage';
 
 	// Function to pick a random worker from the workers list
 	const pickRandomWorker = () => {
@@ -11,9 +14,12 @@
 
 	let currentGuess = $state('');
 	let isNone = $state(false);
+	let hasWon = $state(false);
+	let hasLost = $state(false);
 	let guesses: worker[] = $state([]);
 	let randomWorker: worker = pickRandomWorker();
 	let guessCount = $state(0);
+	let modalGuessedWorker: worker | undefined = $state(undefined);
 
 	// Create a computed value for reversed guesses
 	let reversedGuesses = $derived([...guesses].reverse());
@@ -30,11 +36,67 @@
 			guesses.push(found);
 			currentGuess = '';
 			guessCount++;
+			if (guessCount === 3 && hasWon === false) {
+				hasLost = true;
+				hasWon = false;
+				guessCount = 0;
+				markLoss();
+			}
+			if (
+				found.burger === randomWorker.burger &&
+				found.goto === randomWorker.goto &&
+				found.period === randomWorker.period
+			) {
+				hasWon = true;
+				hasLost = false;
+				guessCount = 0;
+				markWin(randomWorker.name);
+			}
 		} else {
 			console.log('not found');
 		}
 	};
+
+	const closeModal = () => {
+		hasLost = false;
+		hasWon = false;
+		document.body.style.overflow = 'auto';
+		goto('/');
+	};
+
+	// Prevent page scrolling when modal is open
+	$effect(() => {
+		if (hasLost || hasWon) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'auto';
+		}
+	});
+
+	// If game already played today, show modal immediately (win/loss)
+	$effect(() => {
+		const status = getTodayStatus();
+		if (status.playedToday) {
+			if (status.result === 'win') {
+				hasWon = true;
+				hasLost = false;
+				modalGuessedWorker = workers.find((w) => w.name === status.guessedName);
+			} else {
+				hasLost = true;
+				hasWon = false;
+				modalGuessedWorker = undefined;
+			}
+		}
+	});
 </script>
+
+{#if hasLost}
+	<PlayModal {closeModal} />
+{/if}
+
+{#if hasWon}
+	<PlayModal {closeModal} {hasWon} guessedWorker={modalGuessedWorker ?? randomWorker} />
+{/if}
 
 <div
 	class="flex h-auto min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4"
@@ -64,16 +126,16 @@
 							<h3 class="text-2xl">{guess.goto}</h3>
 						</div>
 						<div
-							class="flex flex-col items-center justify-center border border-r-3 border-b-3 px-2 py-1"
+							class={`flex flex-col items-center justify-center border border-r-3 border-b-3 border-black px-2 py-1 ${guess.period === randomWorker.period ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
 						>
 							<p class="text-sm">Time at Mikkeller</p>
 							<h3 class="text-2xl">{guess.period}</h3>
 						</div>
 						<div
-							class="flex flex-col items-center justify-center border border-r-3 border-b-3 px-2 py-1"
+							class={`flex flex-col items-center justify-center border border-r-3 border-b-3 border-black px-2 py-1 ${guess.burger === randomWorker.burger ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
 						>
-							<p class="text-sm">Goto beer</p>
-							<h3 class="text-2xl">{guess.goto}</h3>
+							<p class="text-sm">Fav Burger</p>
+							<h3 class="text-2xl">{guess.burger}</h3>
 						</div>
 					</div>
 				</div>
@@ -98,10 +160,12 @@
 			</div>
 			<div class="mt-2 flex w-full items-center justify-center gap-2">
 				<h3 class="text-3xl">Hint:</h3>
-				{#if guessCount < 3}
+				{#if guessCount < 2}
 					<p>Hint will appear after 2 guesses</p>
 				{:else}
-					{randomWorker.hint}
+					<p class="rounded-lg bg-[#357c4f] px-2 py-1 text-[#f6f2e8]">
+						{randomWorker.hint}
+					</p>
 				{/if}
 			</div>
 		</div>
