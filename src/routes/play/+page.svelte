@@ -96,6 +96,10 @@
 			}
 		}
 	});
+
+	// Trying to prevent scroll on input focus
+	const input = document.querySelector('input');
+	input?.focus({ preventScroll: true });
 </script>
 
 <Toaster

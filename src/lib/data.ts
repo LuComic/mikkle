@@ -28,7 +28,7 @@ export const workers: worker[] = [
 		name: 'Tom',
 		goto: 'burst',
 		burger: 'Cheeseburger',
-		hint: 'põhjala laager + badpenpal',
+		hint: 'Põhjala laager + badpenpal',
 		period: 'old',
 		image: '/pictures/tom.png'
 	},
@@ -63,5 +63,13 @@ export const workers: worker[] = [
 		hint: 'Katjes Party Fred',
 		period: 'old',
 		image: '/pictures/iris.png'
+	},
+	{
+		name: 'Lukas',
+		goto: 'other',
+		burger: 'Katsu Sando',
+		hint: 'Beef 0.3L klaasidega',
+		period: 'new',
+		image: '/pictures/lukas.png'
 	}
 ];
