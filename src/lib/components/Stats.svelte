@@ -24,7 +24,7 @@
 	function resetAll() {
 		clearGuessedNames();
 		clearToday();
-		refreshGuessed();
+		syncGuessedState();
 		// Dispatch event to notify other components
 		if (typeof window !== 'undefined') {
 			window.dispatchEvent(new CustomEvent('mikkle-reset'));
@@ -37,6 +37,15 @@
 	}
 
 	let cheatActive = $state(checkCheatCookie());
+
+	function syncGuessedState() {
+		cheatActive = checkCheatCookie();
+		if (cheatActive) {
+			guessedSet = new Set(workers.map((w) => w.name));
+		} else {
+			refreshGuessed();
+		}
+	}
 
 	function computeOrderedWorkers(): worker[] {
 		const status = getTodayStatus();
@@ -65,19 +74,11 @@
 
 	// Keep guessed list in sync (initial load + cross-tab updates + cheat cookie changes)
 	$effect(() => {
-		const sync = () => {
-			cheatActive = checkCheatCookie();
-			if (cheatActive) {
-				guessedSet = new Set(workers.map((w) => w.name));
-			} else {
-				refreshGuessed();
-			}
-		};
-		sync();
+		syncGuessedState();
 		const storageHandler = (e: StorageEvent) => {
-			if (e.key === 'mikkle_guessed_names') sync();
+			if (e.key === 'mikkle_guessed_names') syncGuessedState();
 		};
-		const cheatHandler = () => sync();
+		const cheatHandler = () => syncGuessedState();
 		if (typeof window !== 'undefined') {
 			window.addEventListener('storage', storageHandler);
 			window.addEventListener('mikkle-cheat-changed', cheatHandler as EventListener);
@@ -129,11 +130,13 @@
 						modalOpen = true;
 					}}
 				>
-					<img
-						src={worker.image}
-						alt={worker.name}
-						class="h-10 w-10 rounded-full border-2 border-[#F6F2E8] object-cover"
-					/>
+					{#key worker.name}
+						<img
+							src={worker.image}
+							alt={worker.name}
+							class="h-10 w-10 rounded-full border-2 border-[#F6F2E8] object-cover"
+						/>
+					{/key}
 					<div class="flex w-full items-center justify-between">
 						{worker.name}
 					</div>
