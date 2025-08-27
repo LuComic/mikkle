@@ -4,16 +4,19 @@
 	import type { worker } from '$lib/data';
 	import PlayModal from '$lib/components/PlayModal.svelte';
 	import { goto } from '$app/navigation';
-	import { getTodayStatus, markLoss, markWin } from '$lib/storage';
+	import { getTodayStatus, markLoss, markWin, listGuessedNames } from '$lib/storage';
 	import { createToaster } from '@skeletonlabs/skeleton-svelte';
 	import { Toaster } from '@skeletonlabs/skeleton-svelte';
 
 	const toaster = createToaster();
 
-	// Function to pick a random worker from the workers list
+	// Function to pick a random worker from the workers list, excluding already-guessed names
 	const pickRandomWorker = () => {
-		const randomIndex = Math.floor(Math.random() * workers.length);
-		return workers[randomIndex];
+		const guessed = new Set(listGuessedNames());
+		const pool = workers.filter((w) => !guessed.has(w.name));
+		const source = pool.length > 0 ? pool : workers;
+		const randomIndex = Math.floor(Math.random() * source.length);
+		return source[randomIndex];
 	};
 
 	let currentGuess = $state('');

@@ -49,11 +49,20 @@
 
 	function computeOrderedWorkers(): worker[] {
 		const status = getTodayStatus();
-		if (!status.playedToday || !status.guessedName) return workers as worker[];
-		const today = workers.find((w) => w.name === status.guessedName);
-		if (!today) return workers as worker[];
-		const rest = workers.filter((w) => w.name !== today.name);
-		return [today, ...rest] as worker[];
+		const todayName = status.playedToday ? status.guessedName : undefined;
+		const guessedNames = new Set(guessedSet);
+		const guessedWorkers = workers.filter((w) => guessedNames.has(w.name));
+		const unguessedWorkers = workers.filter((w) => !guessedNames.has(w.name));
+
+		if (todayName) {
+			const idx = guessedWorkers.findIndex((w) => w.name === todayName);
+			if (idx >= 0) {
+				const todayWorker = guessedWorkers[idx];
+				const restGuessed = guessedWorkers.filter((_, i) => i !== idx);
+				return [todayWorker, ...restGuessed, ...unguessedWorkers] as worker[];
+			}
+		}
+		return [...guessedWorkers, ...unguessedWorkers] as worker[];
 	}
 
 	let orderedWorkers = $derived(computeOrderedWorkers());

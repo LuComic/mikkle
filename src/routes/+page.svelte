@@ -75,7 +75,7 @@
 		<button
 			class="mt-0.5 border px-2 py-1 duration-100 hover:mt-0 hover:border-r-3 hover:border-b-3"
 		>
-			<a class="text-4xl visited:text-black" href="/play">Play</a>
+			<a class="text-3xl visited:text-black md:text-4xl" href="/play">Play</a>
 		</button>
 	{:else}
 		<div class="flex flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
