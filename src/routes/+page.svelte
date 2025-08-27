@@ -45,6 +45,21 @@
 			if (intervalId) clearInterval(intervalId);
 		};
 	});
+
+	// Listen for reset events from the Stats component
+	$effect(() => {
+		const handleReset = () => {
+			refreshStatus();
+		};
+		if (typeof window !== 'undefined') {
+			window.addEventListener('mikkle-reset', handleReset);
+		}
+		return () => {
+			if (typeof window !== 'undefined') {
+				window.removeEventListener('mikkle-reset', handleReset);
+			}
+		};
+	});
 </script>
 
 <div
@@ -63,8 +78,8 @@
 			<a class="text-4xl visited:text-black" href="/play">Play</a>
 		</button>
 	{:else}
-		<div class="flex flex-col gap-2 md:flex-row md:gap-4">
-			<h3 class="flex items-center justify-start gap-2 text-2xl">
+		<div class="flex flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
+			<h3 class="flex items-start justify-start gap-2 text-2xl">
 				{#if result === 'win'}
 					<PartyPopper size={20} />
 					Today's worker was {guessedName}

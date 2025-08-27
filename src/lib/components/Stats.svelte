@@ -2,8 +2,8 @@
 	import { workers } from '$lib/data';
 	import type { worker } from '$lib/data';
 	import PersonalModal from './PersonalModal.svelte';
-	import { Lock } from '@lucide/svelte';
-	import { listGuessedNames, getTodayStatus } from '$lib/storage';
+	import { Lock, RotateCcw } from '@lucide/svelte';
+	import { listGuessedNames, getTodayStatus, clearGuessedNames, clearToday } from '$lib/storage';
 
 	let modalOpen = $state(false);
 	let chosenWorker: worker = $state({
@@ -19,6 +19,16 @@
 
 	function refreshGuessed() {
 		guessedSet = new Set(listGuessedNames());
+	}
+
+	function resetAll() {
+		clearGuessedNames();
+		clearToday();
+		refreshGuessed();
+		// Dispatch event to notify other components
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new CustomEvent('mikkle-reset'));
+		}
 	}
 
 	function checkCheatCookie(): boolean {
@@ -90,7 +100,17 @@
 <div
 	class="mb-auto flex h-full flex-1 flex-col items-start justify-start border-b md:border-b-0 md:border-l md:pl-4"
 >
-	<h1 class="w-full pt-2 text-left text-4xl">Possible guesses</h1>
+	<div class="flex w-full items-center justify-between pt-2">
+		<h1 class="text-4xl">Possible guesses</h1>
+		<button
+			class="mt-0.5 flex items-center gap-2 border px-2 py-1 text-sm duration-100 hover:mt-0 hover:border-r-2 hover:border-b-2 hover:border-black"
+			onclick={resetAll}
+			title="Reset all progress"
+		>
+			<RotateCcw size={16} />
+			Reset
+		</button>
+	</div>
 	<p>Collect them all!</p>
 	<ul class="mt-4 w-full space-y-1 pb-4 font-semibold">
 		{#each orderedWorkers as worker (worker.name)}

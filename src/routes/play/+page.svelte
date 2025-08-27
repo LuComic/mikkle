@@ -5,6 +5,10 @@
 	import PlayModal from '$lib/components/PlayModal.svelte';
 	import { goto } from '$app/navigation';
 	import { getTodayStatus, markLoss, markWin } from '$lib/storage';
+	import { createToaster } from '@skeletonlabs/skeleton-svelte';
+	import { Toaster } from '@skeletonlabs/skeleton-svelte';
+
+	const toaster = createToaster();
 
 	// Function to pick a random worker from the workers list
 	const pickRandomWorker = () => {
@@ -13,7 +17,6 @@
 	};
 
 	let currentGuess = $state('');
-	let isNone = $state(false);
 	let hasWon = $state(false);
 	let hasLost = $state(false);
 	let guesses: worker[] = $state([]);
@@ -53,7 +56,9 @@
 				markWin(randomWorker.name);
 			}
 		} else {
-			console.log('not found');
+			toaster.info({
+				title: 'No such worker'
+			});
 		}
 	};
 
@@ -89,6 +94,11 @@
 		}
 	});
 </script>
+
+<Toaster
+	classes="bg-[#F6F2E8] border-black border rounded-none text-black border-b-3 border-r-3"
+	{toaster}
+></Toaster>
 
 {#if hasLost}
 	<PlayModal {closeModal} />

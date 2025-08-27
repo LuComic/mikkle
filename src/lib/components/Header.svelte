@@ -41,7 +41,7 @@
 </script>
 
 <a
-	class="fixed top-2 left-1/2 z-30 mx-auto flex w-auto -translate-x-1/2 transform items-center justify-center gap-4 border border-r-4 border-b-4 bg-[#f6f2e8] px-4 py-4 shadow-lg visited:text-black md:top-5"
+	class="fixed top-2 left-1/2 z-30 mx-auto flex w-auto -translate-x-1/2 transform items-center justify-center gap-4 border border-r-4 border-b-4 bg-[#f6f2e8] px-2 py-1 shadow-lg visited:text-black md:top-5 md:px-4 md:py-2"
 	href="/"
 >
 	<h3 class="text-2xl">Mikk'le</h3>

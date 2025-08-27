@@ -26,7 +26,7 @@
 	tabindex="0"
 >
 	<div
-		class="flex h-auto w-full flex-col items-start justify-start overflow-scroll border border-r-4 border-b-4 bg-[#F6F2E8] p-4 md:w-[40vw]"
+		class="flex h-auto w-full flex-col items-start justify-start overflow-scroll border bg-[#F6F2E8] p-4 md:w-[40vw]"
 	>
 		<div class="mb-2 flex w-full items-center justify-start gap-2">
 			<img
