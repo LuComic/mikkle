@@ -1,6 +1,6 @@
 export interface worker {
 	name: string;
-	goto: 'burst' | 'yotl' | 'tokyo' | 'varia';
+	goto: 'burst' | 'yotl' | 'tokyo' | 'other';
 	burger: 'Katsu Sando' | 'Cheeseburger';
 	hint: string;
 	period: 'new' | 'old';
@@ -42,7 +42,7 @@ export const workers: worker[] = [
 	},
 	{
 		name: 'Grethe',
-		goto: 'varia',
+		goto: 'other',
 		burger: 'Cheeseburger',
 		hint: 'Ringo Starr',
 		period: 'new',
@@ -50,7 +50,7 @@ export const workers: worker[] = [
 	},
 	{
 		name: 'Mona',
-		goto: 'varia',
+		goto: 'other',
 		burger: 'Katsu Sando',
 		hint: 'Kalamaja OG',
 		period: 'new',
@@ -58,7 +58,7 @@ export const workers: worker[] = [
 	},
 	{
 		name: 'Iris',
-		goto: 'varia',
+		goto: 'other',
 		burger: 'Cheeseburger',
 		hint: 'Katjes Party Fred',
 		period: 'old',
