@@ -3,6 +3,7 @@
 	import type { worker } from '$lib/data';
 	import PersonalModal from './PersonalModal.svelte';
 	import { Lock, RotateCcw } from '@lucide/svelte';
+	import { onMount } from 'svelte';
 	import { listGuessedNames, getTodayStatus, clearGuessedNames, clearToday } from '$lib/storage';
 
 	let modalOpen = $state(false);
@@ -81,6 +82,12 @@
 		}
 	});
 
+	// Render list only after client mount to avoid SSR/client hydration order mismatch
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
+
 	// Keep guessed list in sync (initial load + cross-tab updates + cheat cookie changes)
 	$effect(() => {
 		syncGuessedState();
@@ -122,35 +129,35 @@
 		</button>
 	</div>
 	<p>Collect them all!</p>
-	<ul class="mt-4 w-full space-y-1 pb-4 font-semibold">
-		{#each orderedWorkers as worker (worker.name)}
-			<li class="relative">
-				{#if !guessedSet.has(worker.name)}
-					<div
-						class="absolute top-0 left-0 flex h-full w-full items-center justify-center border border-r-2 border-b-2 bg-gray-400/40"
+	{#if mounted}
+		<ul class="mt-4 w-full space-y-1 pb-4 font-semibold">
+			{#each orderedWorkers as worker (worker.name)}
+				<li class="relative">
+					{#if !guessedSet.has(worker.name)}
+						<div
+							class="absolute top-0 left-0 flex h-full w-full items-center justify-center border border-r-2 border-b-2 bg-gray-400/40"
+						>
+							<Lock />
+						</div>
+					{/if}
+					<button
+						class="flex w-full items-center justify-start gap-2 border border-r-2 border-b-2 border-[#F6F2E8] px-2 py-1 duration-100 hover:border-black"
+						onclick={() => {
+							chosenWorker = worker;
+							modalOpen = true;
+						}}
 					>
-						<Lock />
-					</div>
-				{/if}
-				<button
-					class="flex w-full items-center justify-start gap-2 border border-r-2 border-b-2 border-[#F6F2E8] px-2 py-1 duration-100 hover:border-black"
-					onclick={() => {
-						chosenWorker = worker;
-						modalOpen = true;
-					}}
-				>
-					{#key worker.name}
 						<img
 							src={worker.image}
 							alt={worker.name}
 							class="h-10 w-10 rounded-full border-2 border-[#F6F2E8] object-cover"
 						/>
-					{/key}
-					<div class="flex w-full items-center justify-between">
-						{worker.name}
-					</div>
-				</button>
-			</li>
-		{/each}
-	</ul>
+						<div class="flex w-full items-center justify-between">
+							{worker.name}
+						</div>
+					</button>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </div>
