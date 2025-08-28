@@ -40,7 +40,7 @@ p {
 
 /* Global scrollbar styling */
 * {
-	scrollbar-color: #d1d5db transparent;
+	scrollbar-color: #737373 transparent;
 	scrollbar-width: thin;
 }
 
@@ -54,14 +54,14 @@ p {
 }
 
 *::-webkit-scrollbar-thumb {
-	background: #d1d5db;
+	background: #737373;
 	border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background: #9ca3af;
+	background: #737373;
 }
 
 *::-webkit-scrollbar-thumb:active {
-	background: #9ca3af;
+	background: #737373;
 }
