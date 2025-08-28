@@ -37,3 +37,31 @@ a {
 p {
 	font-family: 'GothamHTF-Book', sans-serif;
 }
+
+/* Global scrollbar styling */
+* {
+	scrollbar-color: #d1d5db transparent;
+	scrollbar-width: thin;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+	width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: #d1d5db;
+	border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: #9ca3af;
+}
+
+*::-webkit-scrollbar-thumb:active {
+	background: #9ca3af;
+}
