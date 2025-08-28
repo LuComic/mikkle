@@ -115,7 +115,7 @@
 {/if}
 
 <div
-	class="mb-auto flex h-full flex-1 flex-col items-start justify-start border-b md:border-b-0 md:border-l md:pl-4"
+	class="mb-auto flex h-full flex-1 flex-col items-start justify-start md:border-l md:pl-4"
 >
 	<div class="flex w-full items-center justify-between pt-2">
 		<h1 class="text-4xl">Possible guesses</h1>

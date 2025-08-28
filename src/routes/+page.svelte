@@ -63,7 +63,7 @@
 </script>
 
 <div
-	class="flex h-auto min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4"
+	class="flex h-auto md:pt-20 min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4"
 >
 	<div
 		class="grid h-full grid-cols-1 items-center justify-center border border-r-2 border-b-2 px-4 shadow-lg md:max-w-[80vw] md:grid-cols-2"
