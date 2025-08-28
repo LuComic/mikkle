@@ -6,6 +6,7 @@
 		hasWon
 	}: { closeModal: () => void; guessedWorker?: worker; hasWon?: boolean } = $props();
 	import { X, HeartCrack, PartyPopper, SignalZero } from '@lucide/svelte';
+	import { Confetti } from 'svelte-confetti';
 
 	// Close modal when clicking outside
 	function handleBackdropClick(event: MouseEvent) {
@@ -29,6 +30,29 @@
 	role="button"
 	tabindex="0"
 >
+	<div
+		style="
+position: fixed;
+top: -50px;
+left: 0;
+height: 100vh;
+width: 100vw;
+display: flex;
+justify-content: center;
+overflow: hidden;
+pointer-events: none;"
+	>
+		<Confetti
+			x={[-5, 5]}
+			y={[0, 0.1]}
+			delay={[0, 2000]}
+			infinite
+			duration={5000}
+			amount={400}
+			size={10}
+			fallDistance="100vh"
+		/>
+	</div>
 	<div
 		class="flex h-auto w-full flex-col items-start justify-start overflow-scroll border border-r-4 border-b-4 bg-[#F6F2E8] p-4 md:w-[40vw]"
 	>

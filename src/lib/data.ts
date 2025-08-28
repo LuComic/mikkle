@@ -1,7 +1,7 @@
 export interface worker {
 	name: string;
 	goto: 'burst' | 'yotl' | 'tokyo' | 'other';
-	burger: 'Katsu Sando' | 'Cheeseburger';
+	burger: 'Katsu Sando' | 'Cheeseburger' | 'Lil Major';
 	hint: string;
 	period: 'new' | 'old';
 	image: string;
@@ -71,5 +71,13 @@ export const workers: worker[] = [
 		hint: 'Beef 0.3L klaasidega',
 		period: 'new',
 		image: '/pictures/lukas.png'
+	},
+	{
+		name: 'Puju',
+		goto: 'other',
+		burger: 'Lil Major',
+		hint: 'Vanaema moos',
+		period: 'old',
+		image: '/pictures/puju.png'
 	}
 ];
