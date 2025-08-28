@@ -118,12 +118,12 @@
 <div
 	class="flex h-auto min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4"
 >
-	<div class="flex h-[70vh] flex-col items-center justify-between gap-4 px-4 py-2 md:w-[40vw]">
+	<div class="flex h-[70vh] flex-col items-center justify-between gap-4 px-4 py-2 md:w-[60vw]">
 		<h1 class="text-5xl md:text-6xl">Start Guessing!</h1>
 		<div class="flex max-h-[70vh] w-full flex-col gap-2 overflow-scroll">
 			{#each reversedGuesses as guess (guess.name)}
 				<div
-					class="flex h-auto w-full flex-col items-start justify-start gap-2 border border-r-3 border-b-3 px-4 py-2"
+					class="flex h-auto w-full flex-col items-start justify-start gap-2 border border-r-2 border-b-2 px-4 py-2"
 				>
 					<div class="flex items-center justify-start gap-2">
 						<img
