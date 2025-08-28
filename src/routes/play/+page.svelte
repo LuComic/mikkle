@@ -103,7 +103,7 @@
 </script>
 
 <Toaster
-	classes="bg-[#F6F2E8] border-black border rounded-none text-black border-b-3 border-r-3"
+	classes="bg-[#F6F2E8] border-black border rounded-none text-black border-b-2 border-r-2"
 	{toaster}
 ></Toaster>
 
@@ -123,7 +123,7 @@
 		<div class="flex max-h-[70vh] w-full flex-col gap-2 overflow-scroll">
 			{#each reversedGuesses as guess (guess.name)}
 				<div
-					class="flex h-auto w-full flex-col items-start justify-start gap-2 border border-r-3 border-b-3 px-4 py-2"
+					class="flex h-auto w-full flex-col items-start justify-start gap-2 border border-r-2 border-b-2 px-4 py-2"
 				>
 					<div class="flex items-center justify-start gap-2">
 						<img
@@ -137,19 +137,19 @@
 					</div>
 					<div class="grid w-full grid-cols-1 items-center justify-center gap-2 md:grid-cols-3">
 						<div
-							class={`flex flex-col items-center justify-center border border-r-3 border-b-3 border-black px-2 py-1 ${guess.goto === randomWorker.goto ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
+							class={`flex flex-col items-center justify-center border border-r-2 border-b-2 border-black px-2 py-1 ${guess.goto === randomWorker.goto ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
 						>
 							<p class="text-sm">Goto beer</p>
 							<h3 class="text-2xl">{guess.goto}</h3>
 						</div>
 						<div
-							class={`flex flex-col items-center justify-center border border-r-3 border-b-3 border-black px-2 py-1 ${guess.period === randomWorker.period ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
+							class={`flex flex-col items-center justify-center border border-r-2 border-b-2 border-black px-2 py-1 ${guess.period === randomWorker.period ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
 						>
 							<p class="text-sm">Time at Mikkeller</p>
 							<h3 class="text-2xl">{guess.period}</h3>
 						</div>
 						<div
-							class={`flex flex-col items-center justify-center border border-r-3 border-b-3 border-black px-2 py-1 ${guess.burger === randomWorker.burger ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
+							class={`flex flex-col items-center justify-center border border-r-2 border-b-2 border-black px-2 py-1 ${guess.burger === randomWorker.burger ? 'bg-[#357c4f] text-[#f6f2e8]' : 'bg-gray-400/70'}`}
 						>
 							<p class="text-sm">Fav Burger</p>
 							<h3 class="text-2xl">{guess.burger}</h3>
@@ -165,11 +165,11 @@
 					placeholder="nimi"
 					bind:value={currentGuess}
 					onkeydown={handleKeydown}
-					class="h-10 w-full border border-r-3 border-b-3 px-2 py-1"
+					class="h-10 w-full border border-r-2 border-b-2 px-2 py-1"
 				/>
 				<div class="justfy-start flex items-center gap-2">
 					<button
-						class="h-10 border border-r-3 border-b-3 px-2 py-1 duration-100"
+						class="h-10 border border-r-2 border-b-2 px-2 py-1 duration-100"
 						onclick={handleEnter}><CornerDownRight size={20} /></button
 					>
 					<p class="text-xl">{guessCount}/3</p>

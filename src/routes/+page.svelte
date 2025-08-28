@@ -66,14 +66,14 @@
 	class="flex h-auto min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4"
 >
 	<div
-		class="grid h-full grid-cols-1 items-center justify-center border border-r-4 border-b-4 px-4 shadow-lg md:max-w-[80vw] md:grid-cols-2"
+		class="grid h-full grid-cols-1 items-center justify-center border border-r-2 border-b-2 px-4 shadow-lg md:max-w-[80vw] md:grid-cols-2"
 	>
 		<TheRules />
 		<Stats />
 	</div>
 	{#if !playedToday}
 		<button
-			class="mt-0.5 border px-2 py-1 duration-100 hover:mt-0 hover:border-r-3 hover:border-b-3"
+			class="mt-0.5 border px-2 py-1 duration-100 hover:mt-0 hover:border-r-2 hover:border-b-2"
 		>
 			<a class="text-3xl visited:text-black md:text-4xl" href="/play">Play</a>
 		</button>
