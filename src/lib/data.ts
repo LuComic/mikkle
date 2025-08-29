@@ -3,6 +3,7 @@ export interface worker {
 	goto: 'burst' | 'yotl' | 'tokyo' | 'other';
 	burger: 'Katsu Sando' | 'Cheeseburger' | 'Lil Major';
 	hint: string;
+	bday: string;
 	period: 'new' | 'old';
 	image: string;
 }
@@ -14,6 +15,7 @@ export const workers: worker[] = [
 		burger: 'Katsu Sando',
 		hint: 'VIHKAB arbuusi',
 		period: 'old',
+		bday: '21. Nov',
 		image: '/pictures/jakob.png'
 	},
 	{
@@ -22,6 +24,7 @@ export const workers: worker[] = [
 		burger: 'Cheeseburger',
 		hint: 'tema sall leidis uue elutee',
 		period: 'new',
+		bday: '19. May',
 		image: '/pictures/emily.png'
 	},
 	{
@@ -30,6 +33,7 @@ export const workers: worker[] = [
 		burger: 'Cheeseburger',
 		hint: 'Põhjala laager + badpenpal',
 		period: 'old',
+		bday: '27. Sept',
 		image: '/pictures/tom.png'
 	},
 	{
@@ -38,6 +42,7 @@ export const workers: worker[] = [
 		burger: 'Cheeseburger',
 		hint: "'ma olen nii räpne' üks ohver",
 		period: 'old',
+		bday: '09. April',
 		image: '/pictures/liisa.png'
 	},
 	{
@@ -46,6 +51,7 @@ export const workers: worker[] = [
 		burger: 'Cheeseburger',
 		hint: 'Ringo Starr',
 		period: 'new',
+		bday: '19. Dec',
 		image: '/pictures/grethe.png'
 	},
 	{
@@ -54,6 +60,7 @@ export const workers: worker[] = [
 		burger: 'Katsu Sando',
 		hint: 'Kalamaja OG',
 		period: 'new',
+		bday: '18. Jan',
 		image: '/pictures/mona.png'
 	},
 	{
@@ -62,6 +69,7 @@ export const workers: worker[] = [
 		burger: 'Cheeseburger',
 		hint: 'Katjes Party Fred',
 		period: 'old',
+		bday: '08. Feb',
 		image: '/pictures/iris.png'
 	},
 	{
@@ -70,6 +78,7 @@ export const workers: worker[] = [
 		burger: 'Katsu Sando',
 		hint: 'Beef 0.3L klaasidega',
 		period: 'new',
+		bday: '19. Apr',
 		image: '/pictures/lukas.png'
 	},
 	{
@@ -78,6 +87,7 @@ export const workers: worker[] = [
 		burger: 'Lil Major',
 		hint: 'Vanaema moos',
 		period: 'old',
+		bday: '10. Sept',
 		image: '/pictures/puju.png'
 	}
 ];

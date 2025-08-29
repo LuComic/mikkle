@@ -101,6 +101,10 @@ pointer-events: none;"
 				<h3 class="text-2xl">Hint:</h3>
 				<p>{guessedWorker?.hint}</p>
 			</div>
+			<div class="flex items-center justify-start gap-1">
+				<h3 class="text-2xl">Bday:</h3>
+				<p>{guessedWorker?.bday}</p>
+			</div>
 		{/if}
 	</div>
 </div>
