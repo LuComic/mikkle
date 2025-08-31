@@ -8,6 +8,7 @@ export interface TodayStatus {
 }
 
 const GUESSED_KEY = 'mikkle_guessed_names';
+const ACTIVE_PROFILE_KEY = 'mikkle_active_profile';
 const TODAY_KEY = 'mikkle_today';
 
 function isBrowser(): boolean {
@@ -30,27 +31,25 @@ function todayString(): string {
 }
 
 export function listGuessedNames(): string[] {
-	if (!isBrowser()) return [];
-	try {
-		const raw = localStorage.getItem(GUESSED_KEY);
-		if (!raw) return [];
-		const parsed = JSON.parse(raw);
-		return Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : [];
-	} catch {
-		return [];
-	}
+	return listGuessedNamesForProfile(getActiveProfile());
 }
 
 export function addGuessedName(name: string): void {
 	if (!isBrowser()) return;
-	const current = new Set(listGuessedNames());
+	const profile = getActiveProfile();
+	const map = readProfilesMap();
+	const current = new Set(map[profile] ?? []);
 	current.add(name);
-	localStorage.setItem(GUESSED_KEY, JSON.stringify(Array.from(current)));
+	map[profile] = Array.from(current);
+	localStorage.setItem(GUESSED_KEY, JSON.stringify(map));
 }
 
 export function clearGuessedNames(): void {
 	if (!isBrowser()) return;
-	localStorage.removeItem(GUESSED_KEY);
+	const profile = getActiveProfile();
+	const map = readProfilesMap();
+	map[profile] = [];
+	localStorage.setItem(GUESSED_KEY, JSON.stringify(map));
 }
 
 export function getTodayStatus(): TodayStatus {
@@ -128,6 +127,74 @@ export function clearTodayIfExpired(): boolean {
 		localStorage.removeItem(TODAY_KEY);
 		return true;
 	}
+}
+
+// Profiles support
+type ProfilesMap = Record<string, string[]>;
+
+function sanitizeNames(list: unknown): string[] {
+	if (!Array.isArray(list)) return [];
+	return (list as unknown[]).filter((x) => typeof x === 'string') as string[];
+}
+
+function readProfilesMap(): ProfilesMap {
+	if (!isBrowser()) return { Default: [] };
+	try {
+		const raw = localStorage.getItem(GUESSED_KEY);
+		if (!raw) return { Default: [] };
+		const parsed = JSON.parse(raw);
+		if (Array.isArray(parsed)) {
+			const migrated: ProfilesMap = { Default: sanitizeNames(parsed) };
+			localStorage.setItem(GUESSED_KEY, JSON.stringify(migrated));
+			return migrated;
+		}
+		if (parsed && typeof parsed === 'object') {
+			const out: ProfilesMap = {};
+			for (const [key, value] of Object.entries(parsed as Record<string, unknown>)) {
+				out[key] = sanitizeNames(value);
+			}
+			return Object.keys(out).length > 0 ? out : { Default: [] };
+		}
+		return { Default: [] };
+	} catch {
+		return { Default: [] };
+	}
+}
+
+export function listProfiles(): string[] {
+	const map = readProfilesMap();
+	return Object.keys(map);
+}
+
+export function getActiveProfile(): string {
+	if (!isBrowser()) return 'Default';
+	try {
+		const raw = localStorage.getItem(ACTIVE_PROFILE_KEY);
+		return raw && typeof raw === 'string' ? raw : 'Default';
+	} catch {
+		return 'Default';
+	}
+}
+
+export function setActiveProfile(profileName: string): void {
+	if (!isBrowser()) return;
+	const name = profileName && profileName.trim() ? profileName.trim() : 'Default';
+	// Ensure profile exists
+	const map = readProfilesMap();
+	if (!map[name]) {
+		map[name] = [];
+		localStorage.setItem(GUESSED_KEY, JSON.stringify(map));
+	}
+	localStorage.setItem(ACTIVE_PROFILE_KEY, name);
+	// Notify same-tab listeners
+	try {
+		window.dispatchEvent(new CustomEvent('mikkle-profile-changed', { detail: { profile: name } }));
+	} catch {}
+}
+
+export function listGuessedNamesForProfile(profileName: string): string[] {
+	const map = readProfilesMap();
+	return map[profileName] ?? [];
 }
 
 export function formatMs(ms: number): string {

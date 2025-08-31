@@ -13,6 +13,7 @@
 		burger: 'Cheeseburger',
 		hint: 'default',
 		period: 'old',
+		bday: 'default',
 		image: 'default'
 	});
 
@@ -92,19 +93,22 @@
 	$effect(() => {
 		syncGuessedState();
 		const storageHandler = (e: StorageEvent) => {
-			if (e.key === 'mikkle_guessed_names') syncGuessedState();
+			if (e.key === 'mikkle_guessed_names' || e.key === 'mikkle_active_profile') syncGuessedState();
 		};
 		const cheatHandler = () => syncGuessedState();
+		const profileHandler = () => syncGuessedState();
 		if (typeof window !== 'undefined') {
 			window.addEventListener('storage', storageHandler);
 			window.addEventListener('mikkle-cheat-changed', cheatHandler as EventListener);
 			window.addEventListener('focus', cheatHandler);
+			window.addEventListener('mikkle-profile-changed', profileHandler as EventListener);
 		}
 		return () => {
 			if (typeof window !== 'undefined') {
 				window.removeEventListener('storage', storageHandler);
 				window.removeEventListener('mikkle-cheat-changed', cheatHandler as EventListener);
 				window.removeEventListener('focus', cheatHandler);
+				window.removeEventListener('mikkle-profile-changed', profileHandler as EventListener);
 			}
 		};
 	});
