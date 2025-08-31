@@ -93,7 +93,7 @@
 <div
 	class="flex h-auto min-h-screen w-screen flex-col items-center justify-center gap-4 bg-[#F6F2E8] p-4 pt-20"
 >
-	<div class="grid grid-cols-4 items-center justify-center gap-4 md:flex md:max-w-[80vw] md:gap-6">
+	<div class="grid grid-cols-4 items-center justify-center gap-2 md:flex md:max-w-[80vw] md:gap-6">
 		<button
 			class={`px-2 py-1 ${activeProfile === 'Default' ? 'border border-r-2 border-b-2 border-black bg-black text-[#F6F2E8]' : 'border hover:border-r-2 hover:border-b-2'}`}
 			onclick={() => selectProfile('Default')}
